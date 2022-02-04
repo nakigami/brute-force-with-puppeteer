@@ -2,6 +2,10 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 (async() => {
 
+    // Generate all alphabet combinations using n-ary virtual tree.
+    const generator = require('indexed-string-variation').generator;
+    const variations = generator('abcdefghijklmnopqrstuvwxyz');
+
     // set the email
     const email = "anas.devriani@gmail.com";
 
@@ -10,6 +14,10 @@ const fs = require('fs');
 
     // read the dictionnary
     const dictionnary = fs.readFileSync('./dictionnary.txt').toString().split(/\r?\n/);
+
+    for (let i=0; i < 100; i++) {
+        dictionnary.push(variations(i));
+    }
 
     // start the browser
     const browser = await puppeteer.launch({
@@ -48,3 +56,4 @@ const fs = require('fs');
     }
     await browser.close();
 })();
+
